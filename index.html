@@ -8,8 +8,6 @@
   <style>
     :root{
       --bg0:#070b14; --bg1:#0b1220;
-      --panel: rgba(255,255,255,.06);
-      --panel2: rgba(255,255,255,.09);
       --line: rgba(255,255,255,.12);
       --text:#eaf1ff; --muted:#b9c7e6;
       --accent:#7aa2ff; --accent2:#b27dff;
@@ -85,9 +83,8 @@
       background: linear-gradient(135deg, rgba(255,90,106,.92), rgba(178,65,83,.92));
       border-color: rgba(255,255,255,.20);
     }
-    .btn.ghost{
-      background: rgba(255,255,255,.04);
-    }
+    .btn.ghost{ background: rgba(255,255,255,.04); }
+
     .card{
       border: 1px solid var(--line);
       background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.05));
@@ -120,9 +117,8 @@
     .side{ padding: 14px; }
     .side h2{ margin: 0 0 10px; font-size: 14px; letter-spacing:.2px; }
     .side .muted{ color: var(--muted); font-size: 13px; line-height: 1.55; }
-    .tabs{
-      display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;
-    }
+
+    .tabs{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
     .tab{
       border:1px solid var(--line);
       background: rgba(255,255,255,.04);
@@ -139,6 +135,7 @@
       border-color: rgba(122,162,255,.65);
       background: rgba(122,162,255,.12);
     }
+
     .statgrid{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -153,6 +150,7 @@
     }
     .stat .lab{ color: var(--muted); font-size: 11px; }
     .stat .val{ font-size: 18px; font-weight: 900; margin-top: 2px; }
+
     .content{ padding: 14px; }
     .qmeta{
       display:flex; justify-content: space-between; gap: 10px; flex-wrap:wrap;
@@ -170,7 +168,7 @@
       margin: 8px 0 12px;
       font-size: 16px;
       font-weight: 900;
-      line-height: 1.35;
+      line-height: 1.4;
     }
     .passage{
       border-left: 3px solid rgba(122,162,255,.85);
@@ -239,6 +237,7 @@
     }
     .tag.ok{ color: var(--ok); }
     .tag.bad{ color: var(--bad); }
+    .tag.warn{ color: var(--warn); }
     .feedback .explain{
       margin-top: 10px;
       color: var(--muted);
@@ -265,10 +264,10 @@
       opacity: .95;
     }
 
-    /* Essay */
+    /* Writing */
     textarea{
       width:100%;
-      min-height: 180px;
+      min-height: 200px;
       resize: vertical;
       border-radius: 14px;
       border:1px solid rgba(255,255,255,.14);
@@ -280,37 +279,30 @@
       outline:none;
     }
     textarea:focus{ border-color: rgba(122,162,255,.65); }
-    .grid2{
-      margin-top: 12px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-    @media (min-width: 900px){
-      .grid2{ grid-template-columns: 1fr 1fr; }
-    }
-    .box{
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      border-radius: 14px;
-      padding: 10px 12px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
-    }
-    .checklist li{ margin: 6px 0; }
     .kbar{
       display:flex; align-items:center; justify-content: space-between; gap:10px;
       margin: 10px 0 0;
       color: var(--muted);
       font-size: 12px;
+      flex-wrap:wrap;
     }
+    .limit-badge{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      border-radius: 999px;
+      padding: 6px 10px;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 12px;
+    }
+    .limit-badge.ok{ border-color: rgba(53,194,124,.45); color: rgba(53,194,124,.95); }
+    .limit-badge.bad{ border-color: rgba(255,90,106,.45); color: rgba(255,90,106,.95); }
 
     @media (pointer: coarse){
       .btn{ padding: 12px 14px; font-size: 14px; border-radius: 14px; }
       .opt{ padding: 14px 14px; }
       .qtitle{ font-size: 17px; }
-      textarea{ min-height: 210px; font-size: 14px; }
+      textarea{ min-height: 240px; font-size: 14px; }
     }
   </style>
 </head>
@@ -322,7 +314,7 @@
       <div class="logo" aria-hidden="true"></div>
       <div class="titlebox">
         <h1>Mentoring Duta Bahasa LEGACY ~ PSD</h1>
-        <div class="sub">Latihan UKBI • 1 Soal per Halaman • PG (feedback instan) + Esai (rubrik + simpan)</div>
+        <div class="sub">Latihan UKBI • 1 Soal per Halaman • PG (feedback instan) + Menulis UKBI (2 tugas) + Isian Singkat</div>
       </div>
     </div>
     <div class="top-actions">
@@ -345,7 +337,7 @@
 
       <div class="tabs" role="tablist">
         <div class="tab active" id="tabPG" role="tab">Pilihan Ganda</div>
-        <div class="tab" id="tabES" role="tab">Esai</div>
+        <div class="tab" id="tabWR" role="tab">Menulis (UKBI)</div>
       </div>
 
       <div class="muted" id="modeHelp" style="margin-top:10px">
@@ -372,7 +364,7 @@
       </div>
 
       <div class="footer-note" id="footerNote">
-        <b>Esai:</b> pakai pola <b>Tesis → Alasan → Contoh → Simpulan</b>. Periksa ejaan & kalimat efektif.
+        <b>Menulis (UKBI):</b> Tugas 1 ±100 kata, Tugas 2 ±150 kata, lalu 3 isian singkat. Fokus: koherensi + kaidah.
       </div>
     </aside>
 
@@ -381,260 +373,292 @@
 </div>
 
 <script>
-/* ===================== BANK PG ===================== */
+/* ===================== BANK PG (40 SOAL) ===================== */
 const BANK_PG = [
   {id:"PG01", area:"Kaidah", q:"Penulisan yang benar adalah …",
    opts:["di sekolah","disekolah","diSekolah","di-sekolah"], ans:0,
    exp:"Kata depan 'di' yang menunjukkan tempat ditulis terpisah: 'di sekolah'."},
+
   {id:"PG02", area:"Kaidah", q:"Kalimat yang tepat menurut kaidah ejaan adalah …",
    opts:["Namun, penelitian itu belum selesai.","Namun penelitian itu belum selesai.","Namun; penelitian itu belum selesai.","Namun: penelitian itu belum selesai."], ans:0,
    exp:"Kata penghubung antarkalimat di awal lazim diikuti koma: 'Namun, ...'."},
+
   {id:"PG03", area:"Kaidah", q:"Penulisan bentuk baku yang benar adalah …",
    opts:["resiko","analisa","praktik","sekedar"], ans:2,
    exp:"Bentuk baku: risiko, analisis, praktik, sekadar."},
+
   {id:"PG04", area:"Kaidah", q:"Penggunaan huruf kapital yang tepat terdapat pada kalimat …",
    opts:["Ia berkunjung ke provinsi jawa barat.","Ia berkunjung ke Provinsi Jawa Barat.","Ia berkunjung ke provinsi Jawa barat.","Ia berkunjung ke Provinsi jawa Barat."], ans:1,
    exp:"Nama geografis memakai kapital: 'Provinsi Jawa Barat'."},
+
   {id:"PG05", area:"Kaidah", q:"Penulisan yang benar untuk menyatakan imbuhan adalah …",
    opts:["di ambil","di-ambil","diambil","di ambilkan"], ans:2,
    exp:"Imbuhan di- digabung dengan kata kerja: 'diambil'."},
+
   {id:"PG06", area:"Kalimat Efektif", q:"Perbaikan kalimat berikut yang paling efektif adalah: “Para siswa-siswa diwajibkan untuk agar membawa buku.”",
    opts:["Para siswa-siswa diwajibkan agar membawa buku.","Siswa diwajibkan membawa buku.","Para siswa diwajibkan untuk agar membawa buku.","Siswa-siswa diwajibkan untuk membawa buku."], ans:1,
-   exp:"Hilangkan pengulangan dan frasa mubazir: 'Siswa diwajibkan membawa buku.'"},
+   exp:"Hilangkan pengulangan dan frasa mubazir: 'Siswa diwajibkan membawa buku.'"
+  },
+
   {id:"PG07", area:"Diksi", q:"Padanan kata yang paling tepat untuk kata 'memprioritaskan' pada kalimat formal adalah …",
    opts:["mengutamakan","mendahulukanin","mempercepatkan","menomorsatukanin"], ans:0,
-   exp:"Dalam ragam baku, 'mengutamakan' paling tepat."},
+   exp:"Dalam ragam baku, 'mengutamakan' paling tepat."
+  },
+
   {id:"PG08", area:"Kalimat Efektif", q:"Kalimat yang logis dan efektif adalah …",
    opts:["Dengan adanya kebijakan itu, maka biaya menjadi turun.","Kebijakan itu membuat biaya turun.","Kebijakan itu sehingga biaya turun.","Biaya menjadi turun karena kebijakan itu ada."], ans:1,
-   exp:"Hindari 'dengan ... maka' (redundan). Pilih bentuk ringkas dan jelas."},
+   exp:"Hindari 'dengan ... maka' (redundan). Pilih bentuk ringkas dan jelas."
+  },
+
   {id:"PG09", area:"Diksi", q:"Kalimat yang menggunakan kata baku adalah …",
    opts:["Ia mengurus ijin penelitian hari ini.","Ia mengurus izin penelitian hari ini.","Ia mengurus ijin penelitian hari ini saja.","Ia mengurus izin-izin penelitian."], ans:1,
-   exp:"Bentuk baku: 'izin' (bukan 'ijin')."},
+   exp:"Bentuk baku: 'izin' (bukan 'ijin')."
+  },
+
   {id:"PG10", area:"Kalimat Efektif", q:"Perbaikan terbaik: “Tujuan daripada kegiatan ini adalah untuk meningkatkan kualitas.”",
    opts:["Tujuan dari kegiatan ini adalah meningkatkan kualitas.","Tujuan kegiatan ini adalah untuk meningkatkan kualitas.","Tujuan kegiatan ini ialah agar untuk meningkatkan kualitas.","Tujuan dari pada kegiatan ini untuk meningkatkan kualitas."], ans:0,
-   exp:"Hindari 'daripada' yang tidak tepat; gunakan 'Tujuan dari ... adalah ...' tanpa pemborosan."},
+   exp:"Hindari 'daripada' yang tidak tepat; gunakan 'Tujuan dari ... adalah ...' tanpa pemborosan."
+  },
+
   {id:"PG11", area:"Membaca", passage:"(1) Literasi digital tidak hanya terkait kemampuan menggunakan gawai. (2) Literasi digital juga mencakup kemampuan menilai kredibilitas informasi. (3) Tanpa kemampuan itu, masyarakat mudah terpapar hoaks. (4) Oleh karena itu, pendidikan literasi digital perlu diperkuat sejak dini.",
    q:"Gagasan utama paragraf tersebut adalah …",
    opts:["Masyarakat mudah terpapar hoaks.","Literasi digital mencakup kemampuan menggunakan gawai.","Pendidikan literasi digital perlu diperkuat sejak dini.","Literasi digital mencakup kemampuan menggunakan gawai dan menilai kredibilitas informasi."],
-   ans:3, exp:"Kalimat (1)–(2) mendefinisikan literasi digital secara luas; (4) adalah akibat/saran."},
+   ans:3,
+   exp:"Kalimat (1)–(2) mendefinisikan literasi digital secara luas; (4) adalah akibat/saran."
+  },
+
   {id:"PG12", area:"Membaca", passage:"(1) Banyak kota menghadapi banjir akibat berkurangnya daerah resapan. (2) Pembangunan yang masif menutup tanah dengan beton dan aspal. (3) Akibatnya, air hujan tidak terserap dan mengalir ke permukiman. (4) Solusi yang dapat dilakukan ialah memperluas ruang terbuka hijau dan memperbaiki sistem drainase.",
    q:"Kalimat (4) berfungsi sebagai …",
    opts:["contoh","penegasan sebab","gagasan pendukung","solusi/penyelesaian"], ans:3,
-   exp:"Kalimat (4) menawarkan solusi atas masalah yang dijelaskan (1)–(3)."},
+   exp:"Kalimat (4) menawarkan solusi atas masalah yang dijelaskan (1)–(3)."
+  },
+
   {id:"PG13", area:"Membaca", passage:"Kebijakan kerja hibrida membuat perusahaan perlu menata ulang cara berkolaborasi. Rapat daring yang terlalu sering dapat menguras energi, tetapi rapat yang terstruktur justru mempercepat pengambilan keputusan.",
    q:"Sikap penulis terhadap rapat daring adalah …",
    opts:["menolak sepenuhnya","mendukung tanpa syarat","kritis namun tetap melihat manfaat","tidak peduli"], ans:2,
-   exp:"Ada kritik (terlalu sering menguras energi) dan pengakuan manfaat (terstruktur mempercepat keputusan)."},
+   exp:"Ada kritik (terlalu sering menguras energi) dan pengakuan manfaat (terstruktur mempercepat keputusan)."
+  },
+
   {id:"PG14", area:"Membaca", passage:"Penelitian menunjukkan bahwa kebiasaan membaca 15 menit sehari dapat meningkatkan kosakata dan pemahaman bacaan. Peningkatan ini terjadi karena paparan kata baru secara konsisten memperkuat jejaring makna dalam ingatan.",
    q:"Kata “paparan” pada konteks tersebut paling dekat maknanya dengan …",
    opts:["pengurangan","penyebaran","keterpapasan/eksposur","penghapusan"], ans:2,
-   exp:"Dalam konteks bahasa, 'paparan' berarti eksposur/terkena secara berulang."},
+   exp:"Dalam konteks bahasa, 'paparan' berarti eksposur/terkena secara berulang."
+  },
+
   {id:"PG15", area:"Membaca", passage:"Sebuah komunitas mengelola bank sampah dengan sistem poin. Warga menabung sampah anorganik, lalu poin ditukar kebutuhan pokok. Sistem ini mendorong partisipasi karena manfaatnya langsung dirasakan.",
    q:"Simpulan yang paling tepat adalah …",
    opts:["Bank sampah selalu gagal karena warga malas menabung.","Sistem poin bank sampah dapat meningkatkan partisipasi warga.","Sampah anorganik tidak bisa ditukar kebutuhan pokok.","Komunitas tidak perlu mengelola sampah secara mandiri."],
-   ans:1, exp:"Teks menegaskan sistem poin mendorong partisipasi lewat manfaat langsung."},
+   ans:1,
+   exp:"Teks menegaskan sistem poin mendorong partisipasi lewat manfaat langsung."
+  },
+
   {id:"PG16", area:"Kaidah", q:"Kalimat yang penulisan tanda bacanya tepat adalah …",
    opts:["Ia membeli roti, susu, dan, telur.","Ia membeli roti, susu, dan telur.","Ia membeli roti susu, dan telur.","Ia membeli roti; susu dan telur."], ans:1,
-   exp:"Koma memisahkan perincian; sebelum 'dan' terakhir tidak diikuti koma tambahan."},
+   exp:"Koma memisahkan perincian; sebelum 'dan' terakhir tidak diikuti koma tambahan."
+  },
+
   {id:"PG17", area:"Kaidah", q:"Penulisan gelar yang tepat adalah …",
    opts:["Drs Ahmad datang.","Drs. Ahmad datang.","Drs.. Ahmad datang.","drs. Ahmad datang."], ans:1,
-   exp:"Gelar disingkat diikuti titik: Drs. Ahmad."},
+   exp:"Gelar disingkat diikuti titik: Drs. Ahmad."
+  },
+
   {id:"PG18", area:"Kaidah", q:"Kalimat yang tepat penggunaan 'yang' adalah …",
    opts:["Mahasiswa yang mengikuti lomba yang mendapatkan sertifikat.","Mahasiswa mengikuti lomba yang mendapatkan sertifikat.","Mahasiswa yang mengikuti lomba mendapatkan sertifikat.","Mahasiswa mengikuti lomba mendapatkan sertifikat yang."], ans:2,
-   exp:"Struktur paling jelas: S (Mahasiswa yang...) + P (mendapatkan...)."},
+   exp:"Struktur paling jelas: S (Mahasiswa yang...) + P (mendapatkan...)."
+  },
+
   {id:"PG19", area:"Kaidah", q:"Penulisan singkatan yang benar adalah …",
    opts:["s.d","s/d","s.d.","sd."], ans:2,
-   exp:"'s.d.' (sampai dengan) memakai titik pada tiap huruf."},
+   exp:"'s.d.' (sampai dengan) memakai titik pada tiap huruf."
+  },
+
   {id:"PG20", area:"Kaidah", q:"Penggunaan tanda titik dua yang tepat adalah …",
    opts:["Ia membeli: roti, susu, dan telur.","Ia membeli roti: susu: dan telur.","Ia: membeli roti, susu, dan telur.","Ia membeli roti, susu dan telur:"], ans:0,
-   exp:"Titik dua dipakai sebelum perincian setelah klausa lengkap."},
+   exp:"Titik dua dipakai sebelum perincian setelah klausa lengkap."
+  },
+
   {id:"PG21", area:"Diksi", q:"Kalimat yang paling tepat (ragam baku) adalah …",
    opts:["Kami akan mengadakan rapat guna untuk membahas evaluasi.","Kami akan mengadakan rapat untuk membahas evaluasi.","Kami akan mengadakan rapat demi untuk membahas evaluasi.","Kami akan mengadakan rapat agar untuk evaluasi."], ans:1,
-   exp:"Hindari 'guna untuk/demi untuk' yang redundant; cukup 'untuk'."},
+   exp:"Hindari 'guna untuk/demi untuk' yang redundant; cukup 'untuk'."
+  },
+
   {id:"PG22", area:"Kalimat Efektif", q:"Kalimat yang memiliki kesepadanan struktur (S-P jelas) adalah …",
    opts:["Untuk meningkatkan mutu, dilakukan pelatihan.","Pelatihan dilakukan untuk meningkatkan mutu.","Meningkatkan mutu, pelatihan dilakukan.","Agar mutu meningkat, pelatihan."], ans:1,
-   exp:"Subjek-predikat jelas: 'Pelatihan dilakukan ...'."},
+   exp:"Subjek-predikat jelas: 'Pelatihan dilakukan ...'."
+  },
+
   {id:"PG23", area:"Diksi", q:"Pasangan kata yang paling lazim adalah …",
    opts:["membuat keputusan","mengambil keputusan","mengangkat keputusan","memetik keputusan"], ans:1,
-   exp:"Kolokasi baku: 'mengambil keputusan'."},
+   exp:"Kolokasi baku: 'mengambil keputusan'."
+  },
+
   {id:"PG24", area:"Kalimat Efektif", q:"Perbaikan kalimat: “Dia menjelaskan tentang mekanisme pendaftaran.”",
    opts:["Dia menjelaskan mekanisme pendaftaran.","Dia menjelaskan tentang mekanisme dari pendaftaran.","Dia menjelaskan mengenai tentang mekanisme pendaftaran.","Dia menjelaskan mekanisme daripada pendaftaran."], ans:0,
-   exp:"'menjelaskan' tidak perlu 'tentang' (lebih efektif tanpa preposisi itu)."},
+   exp:"'menjelaskan' tidak perlu 'tentang' (lebih efektif tanpa preposisi itu)."
+  },
+
   {id:"PG25", area:"Kalimat Efektif", q:"Kalimat yang tidak rancu adalah …",
    opts:["Kami membahas rencana proyek dengan manajer yang baru.","Kami membahas rencana proyek yang baru dengan manajer.","Kami membahas rencana proyek terbaru bersama manajer.","Kami membahas rencana proyek dengan manajer baru-baru ini."], ans:2,
-   exp:"(1)-(2) ambigu: 'yang baru' bisa merujuk proyek atau manajer. (3) jelas."},
+   exp:"(1)-(2) ambigu: 'yang baru' bisa merujuk proyek atau manajer. (3) jelas."
+  },
+
   {id:"PG26", area:"Membaca", passage:"(1) Dalam beberapa tahun terakhir, tren belanja daring meningkat pesat. (2) Kemudahan akses, variasi produk, dan promosi menjadi pendorong utama. (3) Namun, kenaikan ini juga memunculkan masalah baru berupa limbah kemasan. (4) Jika tidak dikelola, limbah tersebut dapat memperburuk pencemaran. (5) Karena itu, produsen dan konsumen perlu menerapkan kemasan ramah lingkungan serta kebiasaan daur ulang.",
    q:"Hubungan kalimat (2) dan (3) adalah …",
    opts:["sebab-akibat","perbandingan","pertentangan","penegasan"], ans:2,
-   exp:"Kalimat (3) diawali 'Namun' yang menyatakan pertentangan terhadap sisi positif pada (2)."},
+   exp:"Kalimat (3) diawali 'Namun' yang menyatakan pertentangan terhadap sisi positif pada (2)."
+  },
+
   {id:"PG27", area:"Membaca", passage:"Sebuah artikel menyatakan bahwa kualitas tidur dipengaruhi oleh kebiasaan sebelum tidur. Paparan cahaya biru dari layar dapat menunda produksi melatonin sehingga seseorang lebih sulit mengantuk.",
    q:"Pernyataan yang didukung teks adalah …",
-   opts:["Cahaya biru mempercepat produksi melatonin.","Layar membantu seseorang cepat mengantuk.","Cahaya biru dapat membuat seseorang lebih sulit mengantuk.","Kualitas tidur tidak dipengaruhi kebiasaan."], ans:2,
-   exp:"Teks menyebut cahaya biru menunda melatonin → sulit mengantuk."},
+   opts:["Cahaya biru mempercepat produksi melatonin.","Layar membantu seseorang cepat mengantuk.","Cahaya biru dapat membuat seseorang lebih sulit mengantuk.","Kualitas tidur tidak dipengaruhi kebiasaan"], ans:2,
+   exp:"Teks menyebut cahaya biru menunda melatonin → sulit mengantuk."
+  },
+
   {id:"PG28", area:"Membaca", passage:"(1) Program magang dapat menjadi jembatan antara dunia pendidikan dan dunia kerja. (2) Mahasiswa belajar keterampilan praktis, sedangkan perusahaan mendapat perspektif baru. (3) Agar manfaat optimal, program perlu dirancang dengan pendampingan dan target capaian.",
    q:"Tujuan penulis pada paragraf tersebut adalah …",
    opts:["mengkritik magang","menjelaskan manfaat magang dan syarat optimalnya","mengajak menghapus magang","menceritakan pengalaman pribadi"], ans:1,
-   exp:"Penulis memaparkan manfaat (1)-(2) dan syarat agar optimal (3)."},
+   exp:"Penulis memaparkan manfaat (1)-(2) dan syarat agar optimal (3)."
+  },
+
   {id:"PG29", area:"Membaca", passage:"Pada masa krisis, komunikasi publik yang jelas mengurangi kepanikan. Informasi yang simpang siur justru memicu rumor dan ketidakpercayaan.",
    q:"Antonim kata “simpang siur” dalam konteks itu adalah …",
    opts:["kacau","gamblang","bising","mendadak"], ans:1,
-   exp:"Simpang siur = tidak jelas/tidak konsisten; antonimnya 'gamblang/jelas'."},
+   exp:"Simpang siur = tidak jelas/tidak konsisten; antonimnya 'gamblang/jelas'."
+  },
+
   {id:"PG30", area:"Membaca", passage:"Dalam diskusi, beberapa peserta menolak usulan itu karena dianggap mahal. Peserta lain menyetujui dengan catatan ada skema bertahap agar beban anggaran tidak melonjak.",
    q:"Konsensus paling mungkin yang bisa diterima bersama adalah …",
    opts:["Usulan ditolak total.","Usulan diterima tanpa perubahan.","Usulan diterapkan bertahap untuk mengendalikan anggaran.","Biaya tidak perlu dipertimbangkan."], ans:2,
-   exp:"Ada pihak setuju dengan syarat skema bertahap untuk menekan beban anggaran."},
+   exp:"Ada pihak setuju dengan syarat skema bertahap untuk menekan beban anggaran."
+  },
+
   {id:"PG31", area:"Kaidah", q:"Penulisan yang benar adalah …",
    opts:["antar kota","antarkota","antar-kota","antarKota"], ans:1,
-   exp:"'antar-' sebagai unsur terikat digabung: antarkota."},
+   exp:"'antar-' sebagai unsur terikat digabung: antarkota."
+  },
+
   {id:"PG32", area:"Diksi", q:"Kalimat yang paling tepat adalah …",
    opts:["Data tersebut bersifat validitas tinggi.","Data tersebut memiliki validitas tinggi.","Data tersebut memvaliditaskan tinggi.","Data tersebut tervalidasi tinggi."], ans:1,
-   exp:"Bentuk nomina yang tepat: 'memiliki validitas tinggi'."},
+   exp:"Bentuk nomina yang tepat: 'memiliki validitas tinggi'."
+  },
+
   {id:"PG33", area:"Kalimat Efektif", q:"Perbaikan efektif: “Hal ini dikarenakan karena kurangnya sosialisasi.”",
    opts:["Hal ini karena kurangnya sosialisasi.","Hal ini dikarenakan kurangnya sosialisasi.","Hal ini disebabkan kurangnya sosialisasi.","Kurangnya sosialisasi dikarenakan hal ini."], ans:2,
-   exp:"Hindari ganda 'dikarenakan karena'. Bentuk paling efektif: 'disebabkan ...'."},
+   exp:"Hindari ganda 'dikarenakan karena'. Bentuk paling efektif: 'disebabkan ...'."
+  },
+
   {id:"PG34", area:"Kaidah", q:"Kalimat yang benar penggunaan koma adalah …",
    opts:["Jika hujan deras turun besok kita tunda kegiatan.","Jika hujan deras turun besok, kita tunda kegiatan.","Jika hujan deras turun, besok kita tunda kegiatan.","Jika hujan deras, turun besok kita tunda kegiatan."], ans:1,
-   exp:"Anak kalimat di awal diikuti koma: 'Jika ..., kita ...'."},
+   exp:"Anak kalimat di awal diikuti koma: 'Jika ..., kita ...'."
+  },
+
   {id:"PG35", area:"Diksi", q:"Makna kata “implikasi” paling tepat adalah …",
    opts:["kebetulan","dampak/konsekuensi","penyebab utama","penutup"], ans:1,
-   exp:"Implikasi = konsekuensi/akibat lanjutan."},
+   exp:"Implikasi = konsekuensi/akibat lanjutan."
+  },
+
   {id:"PG36", area:"Membaca", passage:"Sebuah sekolah menerapkan kebijakan bebas gawai selama jam pelajaran. Setelah tiga bulan, guru melaporkan peningkatan fokus siswa, tetapi sebagian orang tua mengkhawatirkan akses komunikasi darurat.",
    q:"Langkah kompromi yang paling masuk akal adalah …",
    opts:["Melarang gawai sepanjang hari termasuk di rumah.","Membebaskan gawai tanpa aturan.","Menyediakan jalur komunikasi darurat melalui sekolah sambil tetap membatasi gawai di kelas.","Menghapus kebijakan karena protes orang tua."], ans:2,
-   exp:"Mengakomodasi kebutuhan darurat tanpa mengorbankan tujuan fokus belajar."},
+   exp:"Mengakomodasi kebutuhan darurat tanpa mengorbankan tujuan fokus belajar."
+  },
+
   {id:"PG37", area:"Membaca", passage:"Beberapa peneliti menyarankan penggunaan transportasi publik untuk menekan emisi. Namun, kebijakan ini perlu diikuti peningkatan kenyamanan dan ketepatan waktu agar masyarakat mau beralih.",
    q:"Syarat agar masyarakat mau beralih adalah …",
    opts:["tarif dinaikkan","kenyamanan dan ketepatan waktu meningkat","jumlah kendaraan pribadi ditambah","halte dikurangi"], ans:1,
-   exp:"Teks menyebut perlu peningkatan kenyamanan dan ketepatan waktu."},
+   exp:"Teks menyebut perlu peningkatan kenyamanan dan ketepatan waktu."
+  },
+
   {id:"PG38", area:"Kaidah", q:"Penulisan yang tepat adalah …",
    opts:["ke dua","kedua","ke-dua","keDua"], ans:1,
-   exp:"Bentuk urutan sebagai kata bilangan: 'kedua' digabung."},
+   exp:"Bentuk urutan sebagai kata bilangan: 'kedua' digabung."
+  },
+
   {id:"PG39", area:"Kalimat Efektif", q:"Kalimat yang paling efektif adalah …",
    opts:["Para peserta diharapkan agar untuk segera hadir.","Peserta diharapkan segera hadir.","Peserta diharapkan agar segera untuk hadir.","Para peserta diharapkan untuk agar hadir segera."], ans:1,
-   exp:"Hilangkan kata mubazir: 'Peserta diharapkan segera hadir.'"},
+   exp:"Hilangkan kata mubazir: 'Peserta diharapkan segera hadir.'"
+  },
+
   {id:"PG40", area:"Membaca", passage:"(1) Kegiatan relawan tidak selalu membutuhkan dana besar. (2) Banyak komunitas memulai dari pengumpulan waktu, tenaga, dan keahlian. (3) Ketika kepercayaan terbentuk, dukungan sumber daya biasanya mengikuti.",
    q:"Pernyataan yang paling tepat sesuai paragraf adalah …",
    opts:["Relawan hanya efektif jika dana besar tersedia.","Relawan tidak perlu dukungan sumber daya sama sekali.","Relawan dapat dimulai dari kontribusi nonmaterial, lalu dukungan lain bisa menyusul.","Kepercayaan tidak berpengaruh pada dukungan sumber daya."],
-   ans:2, exp:"Teks menekankan mulai dari kontribusi nonmaterial; dukungan menyusul setelah kepercayaan terbentuk."}
+   ans:2,
+   exp:"Teks menekankan mulai dari kontribusi nonmaterial; dukungan menyusul setelah kepercayaan terbentuk."
+  },
 ];
 
-/* ===================== BANK ESAI ===================== */
-const BANK_ES = [
+/* ===================== BANK MENULIS (UKBI + ISIAN SINGKAT) ===================== */
+const BANK_WR = [
   {
-    id:"ES01", area:"Ringkasan",
-    prompt:"Buat ringkasan (80–120 kata) dari paragraf berikut:\n\n“Literasi keuangan membantu individu mengambil keputusan yang tepat terkait pengeluaran, tabungan, dan investasi. Tanpa pemahaman dasar, seseorang cenderung mudah terjebak utang konsumtif dan penawaran finansial yang menyesatkan. Literasi keuangan juga berperan dalam perencanaan jangka panjang, misalnya dana pendidikan dan dana darurat. Karena itu, pendidikan literasi keuangan perlu diperkenalkan sejak dini melalui contoh praktis dalam kehidupan sehari-hari.”",
+    id:"WR01",
+    type:"long",
+    area:"Tugas 1 (±100 kata)",
+    min:80,
+    max:120,
+    prompt:"Ringkas teks berikut dalam ±100 kata:\n\n“Literasi digital tidak hanya berkaitan dengan kemampuan menggunakan gawai, tetapi juga mencakup kemampuan menilai kredibilitas informasi. Tanpa kecakapan tersebut, masyarakat mudah terpapar hoaks dan disinformasi. Oleh karena itu, pendidikan literasi digital perlu diperkuat sejak dini agar masyarakat mampu berpikir kritis dan bertanggung jawab dalam menggunakan teknologi.”",
     rubric:[
-      "Akurasi isi (ide pokok tidak berubah).",
-      "Kelengkapan (manfaat, risiko bila rendah, perencanaan, penting sejak dini).",
-      "Kehematan (80–120 kata, tanpa pengulangan).",
-      "Kaidah (ejaan, tanda baca, kalimat efektif)."
+      "Ide pokok tetap terjaga.",
+      "Memuat definisi, risiko, dan solusi.",
+      "Hemat dan tidak bertele-tele.",
+      "Kaidah (ejaan/tanda baca/diksi) tepat."
     ],
-    scaffold:"Kerangka cepat: 1 kalimat definisi + 1 kalimat risiko + 1 kalimat perencanaan + 1 kalimat simpulan/saran."
+    tip:"Kerangka cepat: definisi → risiko → saran/solusi."
   },
   {
-    id:"ES02", area:"Argumentasi",
-    prompt:"Tulis esai 3–5 paragraf (180–250 kata): Apakah kebijakan “bebas plastik sekali pakai” di pusat perbelanjaan efektif? Nyatakan sikapmu, berikan minimal 2 alasan dan 1 contoh/ilustrasi.",
+    id:"WR02",
+    type:"long",
+    area:"Tugas 2 (±150 kata)",
+    min:130,
+    max:170,
+    prompt:"Tulis tanggapan argumentatif (±150 kata): Apakah kebijakan pembatasan gawai di sekolah efektif? Sertakan minimal dua alasan dan satu solusi kompromi.",
     rubric:[
-      "Tesis jelas (setuju/tidak/bersyarat).",
-      "Dua alasan logis + hubungan sebab-akibat.",
-      "Ada contoh/ilustrasi relevan.",
-      "Koherensi antarparagraf (konjungsi tepat).",
-      "Kaidah & diksi baku."
+      "Tesis/posisi jelas (setuju/tidak/bersyarat).",
+      "Minimal dua alasan logis (sebab-akibat).",
+      "Ada contoh/ilustrasi singkat atau data sederhana.",
+      "Ada solusi/kompromi realistis.",
+      "Koherensi dan kaidah baik."
     ],
-    scaffold:"Pola T-P-E-L: Tesis → Alasan 1 + contoh → Alasan 2 + contoh → simpulan + saran."
+    tip:"Pola: tesis → alasan 1 → alasan 2 → kompromi → simpulan."
   },
   {
-    id:"ES03", area:"Tanggapan Kritis",
-    prompt:"Berikan tanggapan (150–220 kata) terhadap pernyataan: “Rapat daring lebih banyak merugikan daripada menguntungkan.” Sertakan satu sanggahan terhadap argumen lawan.",
-    rubric:[
-      "Posisi jelas & bernuansa (tidak hitam-putih bila perlu).",
-      "Sanggahan relevan (counter-argument).",
-      "Diksi formal & tepat.",
-      "Struktur pembuka–isi–penutup."
-    ],
-    scaffold:"Mulai dengan posisi, jelaskan konteks, sanggah 1 argumen, tutup dengan rekomendasi (mis. rapat terstruktur)."
+    id:"WR03",
+    type:"short",
+    area:"Isian Singkat",
+    min:10,
+    max:45,
+    prompt:"Jelaskan perbedaan 'di' sebagai kata depan dan 'di-' sebagai imbuhan. Beri satu contoh masing-masing (1–2 kalimat).",
+    tip:"Contoh: di rumah (kata depan), ditulis (imbuhan)."
   },
   {
-    id:"ES04", area:"Eksposisi",
-    prompt:"Jelaskan (120–180 kata) langkah-langkah membaca kritis sebuah berita daring agar terhindar dari hoaks. Minimal 4 langkah, jelaskan singkat tiap langkah.",
-    rubric:[
-      "Langkah jelas dan operasional (min. 4).",
-      "Urutan logis (sumber → tanggal → banding → data).",
-      "Bahasa baku dan efektif.",
-      "Kohesi-koherensi baik."
-    ],
-    scaffold:"Gunakan penomoran: (1) cek sumber, (2) cek tanggal/konteks, (3) bandingkan, (4) cek data/ahli, (5) cek bias."
+    id:"WR04",
+    type:"short",
+    area:"Isian Singkat",
+    min:10,
+    max:50,
+    prompt:"Tuliskan satu contoh kalimat efektif dan jelaskan singkat mengapa kalimat itu efektif (1–2 kalimat).",
+    tip:"Ciri: hemat, jelas subjek-predikat, tidak ambigu."
   },
   {
-    id:"ES05", area:"Perbaikan Kalimat",
-    prompt:"Perbaiki kalimat-kalimat berikut agar efektif dan sesuai kaidah (tulis ulang):\n1) “Para pengguna-pengguna diharapkan agar untuk mengisi form pendaftaran.”\n2) “Hal ini dikarenakan karena sistem yang belum stabil.”\n3) “Tujuan daripada program ini adalah untuk meningkatkan kualitas layanan.”\n4) “Namun penelitian itu belum selesai.” (perbaiki tanda baca bila perlu)",
-    rubric:[
-      "Perbaikan tepat (hapus mubazir, perbaiki struktur).",
-      "Ejaan dan tanda baca benar.",
-      "Hasil ringkas namun makna tetap."
-    ],
-    scaffold:"Target: S-P jelas, hemat kata, baku (mis. 'formulir'), koma setelah 'Namun,' jika sebagai penghubung antarkalimat."
-  },
-  {
-    id:"ES06", area:"Email Formal",
-    prompt:"Tulis email formal (120–180 kata) kepada pihak penyelenggara pelatihan untuk meminta informasi: jadwal, biaya, dan sertifikat. Sertakan salam pembuka, isi, penutup yang sopan.",
-    rubric:[
-      "Format email rapi (pembuka–isi–penutup).",
-      "Nada sopan, tujuan jelas.",
-      "Diksi formal & kaidah.",
-      "Meminta jadwal, biaya, sertifikat."
-    ],
-    scaffold:"Pembuka sopan → perkenalan singkat → tujuan (minta jadwal/biaya/sertifikat) → penutup terima kasih + kontak."
-  },
-  // tambahan 6 lagi
-  {
-    id:"ES07", area:"Argumentasi",
-    prompt:"Tulis esai (180–250 kata): Apakah sekolah perlu melarang gawai saat jam pelajaran? Sertakan 2 alasan dan satu opsi kompromi kebijakan.",
-    rubric:["Tesis jelas.","Dua alasan logis.","Ada kompromi realistis.","Koheren.","Kaidah & diksi baku."],
-    scaffold:"Kompromi contoh: gawai disimpan, komunikasi darurat lewat sekolah."
-  },
-  {
-    id:"ES08", area:"Eksposisi",
-    prompt:"Buat paragraf (130–180 kata) pola masalah–sebab–akibat–solusi tentang “limbah kemasan belanja daring”.",
-    rubric:["Struktur masalah-sebab-akibat-solusi jelas.","Kohesi/konjungsi tepat.","Diksi baku.","Kaidah."],
-    scaffold:"Gunakan penanda: 'Masalahnya…', 'Penyebabnya…', 'Akibatnya…', 'Solusinya…'."
-  },
-  {
-    id:"ES09", area:"Surat Pengaduan",
-    prompt:"Tulis surat pengaduan singkat (120–180 kata) kepada pengelola lingkungan tentang sampah berserakan. Sertakan usulan solusi.",
-    rubric:["Format surat jelas.","Nada sopan.","Keluhan spesifik + solusi.","Kaidah."],
-    scaffold:"Sebut lokasi/kejadian → dampak → permintaan tindakan → usulan."
-  },
-  {
-    id:"ES10", area:"Ulasan Kritis",
-    prompt:"Ulas sebuah artikel/berita yang pernah kamu baca (150–220 kata): ringkas isi, nilai kekuatan argumen, sebutkan satu kelemahan/bias yang mungkin.",
-    rubric:["Ringkasan akurat.","Evaluasi argumen jelas.","Kelemahan/bias spesifik.","Bahasa baku."],
-    scaffold:"Ringkas 2–3 kalimat → nilai argumen → tunjukkan celah → simpulan."
-  },
-  {
-    id:"ES11", area:"Opini",
-    prompt:"Tulis opini (150–220 kata): Apakah kerja hibrida meningkatkan produktivitas? Jelaskan plus-minus dan simpulanmu.",
-    rubric:["Plus-minus seimbang.","Simpulan tegas.","Contoh relevan.","Koheren & baku."],
-    scaffold:"Gunakan 'Di satu sisi… Namun… Karena itu…'."
-  },
-  {
-    id:"ES12", area:"Ringkasan",
-    prompt:"Ringkas (100–140 kata):\n\n“Transportasi publik dapat menekan emisi karena mengurangi jumlah kendaraan pribadi. Namun, upaya ini tidak cukup jika layanan tidak nyaman, tidak aman, dan tidak tepat waktu. Banyak pengguna enggan beralih karena waktu tempuh tidak pasti serta akses menuju halte yang kurang ramah pejalan kaki. Oleh sebab itu, kebijakan transportasi publik harus disertai peningkatan integrasi rute, ketepatan jadwal, dan perbaikan fasilitas pendukung agar perpindahan moda terjadi secara berkelanjutan.”",
-    rubric:["Ide utama terjaga.","Memuat syarat peralihan (nyaman, aman, tepat waktu, akses).","Hemat kata.","Kaidah."],
-    scaffold:"Definisi/tujuan → hambatan → syarat perbaikan → simpulan."
+    id:"WR05",
+    type:"short",
+    area:"Isian Singkat",
+    min:10,
+    max:55,
+    prompt:"Apa yang dimaksud kalimat tidak logis? Berikan satu contoh singkat (1–2 kalimat).",
+    tip:"Contoh tidak logis: “Saya makan meja.”"
   }
 ];
 
 /* ===================== STATE ===================== */
-const KEY = "legacy_ukbi_pg_es_v1";
+const KEY = "legacy_ukbi_pg_wr_v1";
 let state = {
-  mode: "PG", // "PG" | "ES"
+  mode: "PG", // "PG" | "WR"
   orderPG: BANK_PG.map((_,i)=>i),
-  orderES: BANK_ES.map((_,i)=>i),
+  orderWR: BANK_WR.map((_,i)=>i),
   idxPG: 0,
-  idxES: 0,
+  idxWR: 0,
   answersPG: {}, // { PG01: {choice, correct, ts} }
-  answersES: {}, // { ES01: {text, ts} }
+  answersWR: {}, // { WR01: {text, ts, final:true/false} }
 };
 
 const el = (s)=>document.querySelector(s);
@@ -644,9 +668,7 @@ function load(){
     const raw = localStorage.getItem(KEY);
     if(!raw) return;
     const obj = JSON.parse(raw);
-    if(obj && obj.mode && obj.orderPG && obj.orderES){
-      state = obj;
-    }
+    if(obj && obj.mode && obj.orderPG && obj.orderWR) state = obj;
   }catch(e){}
 }
 function shuffle(arr){
@@ -668,15 +690,17 @@ function wordCount(txt){
   return t.split(/\s+/).filter(Boolean).length;
 }
 
-/* ===================== COMPUTED ===================== */
+/* ===================== GET CURRENT ===================== */
 function getCurrentPG(){
   const bankIndex = state.orderPG[state.idxPG];
   return BANK_PG[bankIndex];
 }
-function getCurrentES(){
-  const bankIndex = state.orderES[state.idxES];
-  return BANK_ES[bankIndex];
+function getCurrentWR(){
+  const bankIndex = state.orderWR[state.idxWR];
+  return BANK_WR[bankIndex];
 }
+
+/* ===================== STATS ===================== */
 function pgStats(){
   const entries = Object.values(state.answersPG);
   const answered = entries.length;
@@ -685,16 +709,15 @@ function pgStats(){
   const score = Math.round((correct / BANK_PG.length) * 100);
   return {answered, correct, wrong, score};
 }
-function esStats(){
-  const entries = Object.values(state.answersES);
-  const answered = entries.length;
-  return {answered};
+function wrStats(){
+  const entries = Object.values(state.answersWR);
+  const finalAnswered = entries.filter(x=>x.final===true).length;
+  return {answered: finalAnswered};
 }
 
-/* ===================== TOP / SIDE ===================== */
+/* ===================== CHROME ===================== */
 function updateChrome(){
-  // mode label
-  el("#pillMode").textContent = `Mode: ${state.mode === "PG" ? "PG" : "Esai"}`;
+  el("#pillMode").textContent = `Mode: ${state.mode === "PG" ? "PG" : "Menulis"}`;
 
   const stats = pgStats();
   el("#statCorrect").textContent = stats.correct;
@@ -710,27 +733,34 @@ function updateChrome(){
     answeredText = `Terjawab: ${stats.answered}`;
     barPct = Math.round((stats.answered / BANK_PG.length) * 100);
     el("#modeHelp").innerHTML = "<b>PG:</b> pilih opsi → langsung muncul benar/salah + jawaban benar + pembahasan.";
+    el("#statArea").textContent = getCurrentPG().area;
   }else{
-    const es = esStats();
-    indexText = `Soal ${state.idxES+1}/${BANK_ES.length}`;
-    answeredText = `Terjawab: ${es.answered}`;
-    barPct = Math.round((es.answered / BANK_ES.length) * 100);
-    el("#modeHelp").innerHTML = "<b>Esai:</b> tulis jawaban → klik <b>Simpan</b> → cek rubrik + kerangka.";
+    const w = wrStats();
+    indexText = `Soal ${state.idxWR+1}/${BANK_WR.length}`;
+    answeredText = `Tersimpan: ${w.answered}`;
+    barPct = Math.round((w.answered / BANK_WR.length) * 100);
+    el("#modeHelp").innerHTML = "<b>Menulis:</b> Tugas 1 ±100 kata, Tugas 2 ±150 kata, lalu isian singkat. Klik <b>Simpan</b> untuk final.";
+    el("#statArea").textContent = getCurrentWR().area;
   }
 
   el("#pillIndex").textContent = indexText;
   el("#pillAnswered").textContent = answeredText;
   el("#bar").style.width = `${barPct}%`;
 
-  // area
-  el("#statArea").textContent = state.mode === "PG" ? getCurrentPG().area : getCurrentES().area;
-
-  // tabs
   el("#tabPG").classList.toggle("active", state.mode==="PG");
-  el("#tabES").classList.toggle("active", state.mode==="ES");
+  el("#tabWR").classList.toggle("active", state.mode==="WR");
 }
 
 /* ===================== RENDER PG ===================== */
+function choosePG(choiceIndex){
+  const item = getCurrentPG();
+  if(state.answersPG[item.id]) return; // lock
+  const correct = (choiceIndex === item.ans);
+  state.answersPG[item.id] = { choice: choiceIndex, correct, ts: new Date().toISOString() };
+  save();
+  render();
+}
+
 function renderPG(){
   const item = getCurrentPG();
   const saved = state.answersPG[item.id];
@@ -809,57 +839,60 @@ function renderPG(){
   el("#btnJumpLast").addEventListener("click", ()=>{ state.idxPG = BANK_PG.length-1; save(); render(); });
 }
 
-/* ===================== RENDER ES ===================== */
-function renderES(){
-  const item = getCurrentES();
-  const saved = state.answersES[item.id];
+/* ===================== RENDER WRITING ===================== */
+function limitBadge(wc, min, max){
+  if(min == null || max == null) return `<span class="limit-badge">Kata: <b>${wc}</b></span>`;
+  const ok = wc >= min && wc <= max;
+  return `<span class="limit-badge ${ok ? "ok" : "bad"}">Kata: <b>${wc}</b> • Target ${min}-${max}</span>`;
+}
+
+function renderWR(){
+  const item = getCurrentWR();
+  const saved = state.answersWR[item.id];
   const text = saved?.text || "";
   const wc = wordCount(text);
 
-  const prevDisabled = state.idxES === 0;
-  const nextDisabled = state.idxES === BANK_ES.length - 1;
+  const prevDisabled = state.idxWR === 0;
+  const nextDisabled = state.idxWR === BANK_WR.length - 1;
 
-  const rubric = item.rubric.map(r=>`<li>${escapeHtml(r)}</li>`).join("");
+  const rubricHtml = item.rubric
+    ? `<ul style="margin:8px 0 0 18px">${item.rubric.map(r=>`<li>${escapeHtml(r)}</li>`).join("")}</ul>`
+    : "";
 
-  let feedbackHtml = "";
-  if(saved){
-    feedbackHtml = `
-      <div class="feedback show">
-        <span class="tag ok">💾 TERSIMPAN</span>
-        <div class="explain">
-          <b>Rubrik cek:</b>
-          <ul class="checklist" style="margin:8px 0 0 18px; padding:0">${rubric}</ul>
-          <div style="margin-top:10px">
-            <b>Kerangka saran:</b> ${escapeHtml(item.scaffold || "—")}
-          </div>
-        </div>
-      </div>
-    `;
-  }else{
-    feedbackHtml = `
-      <div class="feedback show">
-        <span class="tag" style="color:var(--warn)">✍️ BELUM DISIMPAN</span>
-        <div class="explain">
-          Tulis jawaban, lalu klik <b>Simpan</b>. Setelah itu rubrik akan muncul sebagai checklist.
-        </div>
-      </div>
-    `;
-  }
+  const badge = (item.type === "long")
+    ? limitBadge(wc, item.min, item.max)
+    : `<span class="limit-badge">Isian singkat (1–2 kalimat)</span>`;
+
+  // status
+  const isFinal = saved?.final === true;
+  const statusTag = isFinal
+    ? `<span class="tag ok">💾 TERSIMPAN (FINAL)</span>`
+    : `<span class="tag warn">✍️ DRAF / BELUM FINAL</span>`;
+
+  const warning = (item.type === "long")
+    ? (() => {
+        if(wc === 0) return "";
+        if(wc < item.min) return `<div class="mini">⚠️ Terlalu pendek. Tambahkan detail agar mendekati target.</div>`;
+        if(wc > item.max) return `<div class="mini">⚠️ Terlalu panjang. Ringkas agar sesuai target.</div>`;
+        return `<div class="mini">✅ Sudah dalam rentang target kata.</div>`;
+      })()
+    : "";
 
   el("#content").innerHTML = `
     <div class="qmeta">
       <div class="badge">${escapeHtml(item.id)} • ${escapeHtml(item.area)}</div>
-      <div class="mini">Esai dinilai dengan rubrik (self-check / mentor check).</div>
+      <div class="mini">${badge}</div>
     </div>
 
     <div class="qtitle">${escapeHtml(item.prompt).replaceAll("\n","<br>")}</div>
 
     <div class="kbar">
-      <div>Jumlah kata: <b id="wc">${wc}</b></div>
-      <div class="mini">Tip: ringkas, baku, koheren.</div>
+      <div>${badge}</div>
+      <div class="mini">${escapeHtml(item.tip || "")}</div>
     </div>
+    ${warning}
 
-    <textarea id="ta" placeholder="Tulis jawaban esai di sini...">${escapeHtml(text)}</textarea>
+    <textarea id="ta" placeholder="Tulis jawaban di sini...">${escapeHtml(text)}</textarea>
 
     <div class="navrow">
       <div class="left">
@@ -867,70 +900,73 @@ function renderES(){
         <button class="btn" id="btnNext" ${nextDisabled ? "disabled" : ""}>Next →</button>
       </div>
       <div class="right">
-        <button class="btn primary" id="btnSave">Simpan</button>
+        <button class="btn primary" id="btnSave">Simpan Final</button>
         <button class="btn ghost" id="btnJumpLast">Ke soal terakhir</button>
       </div>
     </div>
 
-    ${feedbackHtml}
+    <div class="feedback show">
+      ${statusTag}
+      <div class="explain" style="margin-top:10px">
+        ${item.type === "long"
+          ? `<b>Rubrik Penilaian:</b>${rubricHtml}`
+          : `<b>Penilaian Isian:</b> jawaban harus jelas, tepat, dan sesuai kaidah.`
+        }
+      </div>
+    </div>
 
-    <div class="grid2">
-      <div class="box">
-        <b>Checklist cepat esai:</b>
-        <ul style="margin:8px 0 0 18px; padding:0">
-          <li>Tesis jelas (posisi kamu).</li>
-          <li>Minimal 2 alasan + 1 contoh (untuk argumentasi).</li>
-          <li>Konjungsi tepat (namun, karena itu, selain itu).</li>
-          <li>Minim mubazir (“agar untuk”, “dikarenakan karena”).</li>
-        </ul>
-      </div>
-      <div class="box">
-        <b>Catatan:</b> Jika kamu mau aku nilai, tinggal copy jawaban esai dan kirim di chat. Aku koreksi ejaan, diksi, koherensi, dan beri versi revisinya.
-      </div>
+    <div class="footer-note">
+      <b>Catatan:</b> Mode Menulis ini meniru pola UKBI: 2 tugas menulis + isian singkat. Kamu bisa ekspor jawaban untuk dicek mentor.
     </div>
   `;
 
   const ta = el("#ta");
+  // autosave draft (tidak dianggap final)
   ta.addEventListener("input", ()=>{
-    el("#wc").textContent = wordCount(ta.value);
-    // autosave draft ringan (tanpa dianggap "tersimpan final")
-    state.answersES[item.id] = { text: ta.value, ts: saved?.ts || null, draft: true };
+    state.answersWR[item.id] = { text: ta.value, ts: saved?.ts || null, final: false };
     save();
+    // update word count badge cepat (rerender ringan)
+    const newWc = wordCount(ta.value);
+    const badgeEl = document.querySelectorAll(".limit-badge");
+    if(badgeEl && badgeEl[0]){
+      if(item.type === "long") badgeEl[0].outerHTML = limitBadge(newWc, item.min, item.max);
+      else badgeEl[0].outerHTML = `<span class="limit-badge">Isian singkat (1–2 kalimat)</span>`;
+    }
   });
 
   el("#btnSave").addEventListener("click", ()=>{
-    state.answersES[item.id] = { text: ta.value, ts: new Date().toISOString(), draft: false };
+    const currentText = ta.value;
+    const currentWc = wordCount(currentText);
+
+    // validasi ringan untuk tugas panjang
+    if(item.type === "long"){
+      if(currentWc < item.min || currentWc > item.max){
+        const ok = confirm(`Jumlah kata ${currentWc}. Target ${item.min}-${item.max}. Simpan final tetap?`);
+        if(!ok) return;
+      }
+    }else{
+      if(currentWc === 0){
+        alert("Jawaban masih kosong.");
+        return;
+      }
+    }
+
+    state.answersWR[item.id] = { text: currentText, ts: new Date().toISOString(), final: true };
     save();
-    render(); // refresh to show "TERSIMPAN" feedback
+    render(); // refresh status
   });
 
-  el("#btnPrev").addEventListener("click", ()=>{ if(state.idxES>0){ state.idxES--; save(); render(); }});
-  el("#btnNext").addEventListener("click", ()=>{ if(state.idxES<BANK_ES.length-1){ state.idxES++; save(); render(); }});
-  el("#btnJumpLast").addEventListener("click", ()=>{ state.idxES = BANK_ES.length-1; save(); render(); });
+  el("#btnPrev").addEventListener("click", ()=>{ if(state.idxWR>0){ state.idxWR--; save(); render(); }});
+  el("#btnNext").addEventListener("click", ()=>{ if(state.idxWR<BANK_WR.length-1){ state.idxWR++; save(); render(); }});
+  el("#btnJumpLast").addEventListener("click", ()=>{ state.idxWR = BANK_WR.length-1; save(); render(); });
 }
 
-/* ===================== ACTIONS ===================== */
-function choosePG(choiceIndex){
-  const item = getCurrentPG();
-  if(state.answersPG[item.id]) return;
-  const correct = (choiceIndex === item.ans);
-  state.answersPG[item.id] = { choice: choiceIndex, correct, ts: new Date().toISOString() };
-  save();
-  render();
-}
-
-function render(){
-  updateChrome();
-  if(state.mode === "PG") renderPG();
-  else renderES();
-}
-
+/* ===================== EXPORT ===================== */
 function exportJSON(){
   const payload = {
     exportedAt: new Date().toISOString(),
-    mode: state.mode,
     answersPG: state.answersPG,
-    answersES: state.answersES,
+    answersWR: state.answersWR,
   };
   const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
   const url = URL.createObjectURL(blob);
@@ -943,27 +979,34 @@ function exportJSON(){
   URL.revokeObjectURL(url);
 }
 
-/* ===================== HEADER BUTTONS / TABS ===================== */
+/* ===================== RENDER ROOT ===================== */
+function render(){
+  updateChrome();
+  if(state.mode === "PG") renderPG();
+  else renderWR();
+}
+
+/* ===================== UI BINDINGS ===================== */
 el("#tabPG").addEventListener("click", ()=>{ state.mode="PG"; save(); render(); });
-el("#tabES").addEventListener("click", ()=>{ state.mode="ES"; save(); render(); });
+el("#tabWR").addEventListener("click", ()=>{ state.mode="WR"; save(); render(); });
 
 el("#btnReset").addEventListener("click", ()=>{
-  if(confirm("Reset semua jawaban PG dan esai?")){
+  if(confirm("Reset semua jawaban PG & Menulis?")){
     state.answersPG = {};
-    state.answersES = {};
+    state.answersWR = {};
     state.idxPG = 0;
-    state.idxES = 0;
+    state.idxWR = 0;
     save();
     render();
   }
 });
 
 el("#btnShuffle").addEventListener("click", ()=>{
-  if(confirm("Acak urutan soal (PG dan Esai)?")){
+  if(confirm("Acak urutan soal PG & Menulis? (jawaban tetap tersimpan)")){
     state.orderPG = shuffle(state.orderPG);
-    state.orderES = shuffle(state.orderES);
+    state.orderWR = shuffle(state.orderWR);
     state.idxPG = 0;
-    state.idxES = 0;
+    state.idxWR = 0;
     save();
     render();
   }
@@ -973,12 +1016,11 @@ el("#btnExport").addEventListener("click", exportJSON);
 
 /* ===================== INIT ===================== */
 load();
-// safety
 if(!state.orderPG || state.orderPG.length !== BANK_PG.length) state.orderPG = BANK_PG.map((_,i)=>i);
-if(!state.orderES || state.orderES.length !== BANK_ES.length) state.orderES = BANK_ES.map((_,i)=>i);
+if(!state.orderWR || state.orderWR.length !== BANK_WR.length) state.orderWR = BANK_WR.map((_,i)=>i);
 if(state.idxPG<0) state.idxPG=0; if(state.idxPG>=BANK_PG.length) state.idxPG=BANK_PG.length-1;
-if(state.idxES<0) state.idxES=0; if(state.idxES>=BANK_ES.length) state.idxES=BANK_ES.length-1;
-if(state.mode!=="PG" && state.mode!=="ES") state.mode="PG";
+if(state.idxWR<0) state.idxWR=0; if(state.idxWR>=BANK_WR.length) state.idxWR=BANK_WR.length-1;
+if(state.mode!=="PG" && state.mode!=="WR") state.mode="PG";
 save();
 render();
 </script>
